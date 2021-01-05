@@ -1,115 +1,49 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App;
 
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class UserController extends Controller
+class User extends Authenticatable implements JWTSubject
 {
-    public function login(Request $request)
+    use Notifiable;
+    protected $guarded = [];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'nama_lengkap', 'email', 'password','avatar','telepon', 'role', 'lokasi'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    public function getJWTIdentifier()
     {
-        $credentials = $request->only('email', 'password');
-
-        try {
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
-            }
-        } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
-        return response()->json(compact('token'));
+        return $this->getKey();
     }
 
-    public function register(Request $request)
+    public function getJWTCustomClaims()
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-        ]);
-
-        $token = JWTAuth::fromUser($user);
-
-        return response()->json(compact('user','token'),201);
+        return [];
     }
 
-    public function getAuthenticatedUser()
+    public function getDeleteAtAttribute()
     {
-        try {
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                return response()->json(['user_not_found'], 404);
-            }
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-
-            return response()->json(['token_expired'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-
-            return response()->json(['token_invalid'], $e->getStatusCode());
-
-        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-
-            return response()->json(['token_absent'], $e->getStatusCode());
-
-        }
-
-        return response()->json(compact('user'));
+        return \Carbon\Carbon::parse($this->attributes['deleted_at'])->translatedFormat('d F Y H:i');
     }
+
+    //relation
 }
-
-
-// namespace App;
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-// use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Illuminate\Notifications\Notifiable;
-
-// class User extends Authenticatable
-// {
-//     use Notifiable;
-
-//     /**
-//      * The attributes that are mass assignable.
-//      *
-//      * @var array
-//      */
-//     protected $fillable = [
-//         'name', 'email', 'password',
-//     ];
-
-//     /**
-//      * The attributes that should be hidden for arrays.
-//      *
-//      * @var array
-//      */
-//     protected $hidden = [
-//         'password', 'remember_token',
-//     ];
-
-//     /**
-//      * The attributes that should be cast to native types.
-//      *
-//      * @var array
-//      */
-//     protected $casts = [
-//         'email_verified_at' => 'datetime',
-//     ];
-// }

@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('telepon')->unique();
             $table->string('password');
-            $table->string('avatar')->nulllable();
+            $table->string('avatar')->nulllable()->default('https://via.placeholder.com/150');
             $table->string('lokasi')->nulllable();
-            $table->integer('role');
+            $table->unsignedBigInteger('role')->default(1);
             $table->rememberToken();
             $table->timestamps();
         });
