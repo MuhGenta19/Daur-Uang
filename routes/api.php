@@ -24,5 +24,5 @@ Route::post('login', 'Api\UserController@login');//login
 
 // Route::get('bookall', 'BookController@bookAuth')->middleware('jwt.verify');
 // Route::get('user', 'UserController@getAuthenticatedUser')->middleware('jwt.verify');
-Route::get('profile', 'ProfileController@index')->middleware('jwt.verify');
-Route::get('profile/{id}', 'ProfileController@index')->middleware('jwt.verify');
+Route::get('profile', 'ProfileController@index')->middleware('jwt.verify');//get profile
+Route::get('profile/{id}', 'ProfileController@index')->middleware('jwt.verify');//get user by id
