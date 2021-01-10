@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -34,7 +35,7 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'telepon' => 'required',
-            // 'lokasi' => 'required'
+            'lokasi' => 'required'
         ]);
 
         if($validator->fails()){
@@ -42,11 +43,11 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->get('name'),
+            'nama_lengkap' => $request->get('nama_lengkap'),
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
             'telepon' => $request->get('telepon'),
-            // 'lokasi' => $request->get('lokasi')
+            'lokasi' => $request->get('lokasi')
         ]);
 
         $token = JWTAuth::fromUser($user);
