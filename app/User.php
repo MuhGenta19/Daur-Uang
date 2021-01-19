@@ -2,15 +2,24 @@
 
 namespace App;
 
+use App\Model\Penarikan;
+use App\Model\Penyetoran;
+use App\Model\Role;
+use App\Model\Tabungan;
+use App\Traits\FormatDate;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
-    protected $guarded = [];
+    use SoftDeletes;
+    use FormatDate;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'nama_lengkap', 'email', 'password','avatar','telepon', 'role', 'lokasi'
+        'nama_lengkap', 'email', 'password', 'telepon', 'avatar', 'lokasi', 'role_id'
     ];
 
     /**
@@ -40,10 +49,35 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function getDeleteAtAttribute()
+    public function getDeletedAtAttribute()
     {
-        return \Carbon\Carbon::parse($this->attributes['deleted_at'])->translatedFormat('d F Y H:i');
+        return \Carbon\Carbon::parse($this->attributes['deleted_at'])
+            ->translatedFormat('d F Y H:i');
     }
 
-    //relation
+    // Relation
+    public function penyetoran()
+    {
+        return $this->hasMany(Penyetoran::class);
+    }
+
+    public function penarikan()
+    {
+        return $this->hasMany(Penarikan::class);
+    }
+
+    public function tabungans()
+    {
+        return $this->hasMany(Tabungan::class);
+    }
+
+    public function penjemputan()
+    {
+        return $this->belongsTo('App\Api\Penjemputan', 'User_id', 'id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

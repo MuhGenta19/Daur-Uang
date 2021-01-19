@@ -1,23 +1,33 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use Auth;
-use Alert;
 use App\User;
-use Illuminate\Http\Request;
-use Hash;
+use App\Model\Tabungan;
 use GuzzleHttp\Client;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+// use Alert;
 
 class ProfileController extends Controller
 {
+	public function show($id)
+    {
+        $data = User::findOrFail($id);
+
+        return $this->sendResponse('Success', 'Data user Berhasil Dimuat', $data, 200);
+    }
+
 	public function index()
 	{
 		$user = User::where('id', Auth::user()->id)->first();
+		$saldo = Tabungan::where('id_nasabah', Auth::id())->first('saldo');
 		if (Empty($user)) {
 			return response('login terlebih dahulu');
 		}
-		return $this->sendResponse('Success', 'ini dia profil anda', $user, 200);
+		return $this->sendResponse('Success', 'ini dia profil anda', compact('user','saldo'), 200);
 	}
 
 	public function update(Request $request)
@@ -25,7 +35,6 @@ class ProfileController extends Controller
 		$this->validate($request, [
 			'password'  => 'confirmed',
 		]);
-		$image = null;
 
 		if ($request->image) {
 			$img = base64_encode(file_get_contents($request->image));
@@ -43,7 +52,8 @@ class ProfileController extends Controller
 		}
 
 		$user = User::where('id', Auth::user()->id)->first();
-		$user->nama_lengkap = $request->name_lengkap ?? $user->name;
+		$user->nama_lengkap = $request->nama_lengkap ?? $user->nama_lengkap;
+		$user->email = $request->email;
 		$user->telepon = $request->telepon;
 		$user->lokasi = $request->lokasi;
 		$user->avatar = $request->image ? $image : Auth::user()->avatar;

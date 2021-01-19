@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('lokasi')->nulllable();
             $table->unsignedBigInteger('role')->default(1);
             $table->rememberToken();
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }
