@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
+	public function show($id)
+    {
+        $data = User::findOrFail($id);
+
+        return $this->sendResponse('Success', 'Data User :', $data, 200);
+    }
+
     public function index()
     {
         $user = User::where('id', Auth::user()->id)->first();
