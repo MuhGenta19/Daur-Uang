@@ -12,21 +12,21 @@ class SampahController extends Controller
     {
         $data = Sampah::with(['jenis'])->orderBy('id', 'ASC')->get();
 
-        return $this->sendResponse('Success', 'Data Sampah Berhasil dimuat', $data, 200);
+        return $this->sendResponse('Success', 'Data Sampah :', $data, 200);
     }
 
     public function getJenis()
     {
         $data = Jenis::all();
 
-        return $this->sendResponse('Success', 'Data Jenis Sampah Dimuat', $data, 200);
+        return $this->sendResponse('Success', 'Data Jenis Sampah :', $data, 200);
     }
 
     public function show($id)
     {
         $data = Sampah::findOrFail($id);
 
-        return $this->sendResponse('Success', 'Data Sampah Berhasil Dimuat', $data, 200);
+        return $this->sendResponse('Success', 'Data Sampah :', $data, 200);
     }
 
     public static function addSampah($data)

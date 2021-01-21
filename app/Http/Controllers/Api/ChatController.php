@@ -28,7 +28,7 @@ class ChatController extends Controller
 
         $data = array_unique(array_merge($from, $to), SORT_REGULAR);
         $users = array_values($data);
-        return $this->sendResponse('Success', 'kontak dong', $users, 200);
+        return $this->sendResponse('Success', 'ini kontak', $users, 200);
     }
 
     public function getChat($user_id)
@@ -38,7 +38,7 @@ class ChatController extends Controller
         // update status terbaca dari user yang mengirim pesan
         Chat::where(['from' => $user_id, 'to' => $my_id])->update(['is_read' => 1]);
 
-        // ambil pesanya dari user yang di select
+        // ambil pesan dari user yang di select
         $messages = Chat::where(function ($query) use ($user_id, $my_id) {
             $query->where('from', $user_id)->where('to', $my_id)->where('owner', $my_id);
         })->oRwhere(function ($query) use ($user_id, $my_id) {
@@ -84,7 +84,7 @@ class ChatController extends Controller
         );
 
         $pusher->trigger('my-channel', 'my-event', $data);
-        return $this->sendResponse('Success', 'pesan terkirim bos', $data, 200);
+        return $this->sendResponse('Success', 'berhasil mengirim pesan', $data, 200);
     }
 
     public function destroy($id)
@@ -96,14 +96,14 @@ class ChatController extends Controller
         }
         if ($Message) {
             $Message->delete();
-            return $this->sendResponse('Success', 'Berhasil menghapus pesan', $Message, 200);
+            return $this->sendResponse('Success', 'berhasil menghapus pesan', $Message, 200);
         }
-        return $this->sendResponse('Error', 'Gagal menghapus pesan', null, 500);
+        return $this->sendResponse('Error', 'gagal menghapus pesan', null, 500);
     } 
 
     public function hapus_untuk_semua($id)
     {
-        //masih butuh banyak seklai penelitian bos
+        //masih butuh banyak sekali penelitian bos
         //cacatnya masih ada
         $user = Auth::id();
         $Message = Chat::find($id);
@@ -116,6 +116,6 @@ class ChatController extends Controller
             $semua->delete();
             return $this->sendResponse('Success', 'Berhasil menghapus pesan', $Message, 200);
         }
-        return $this->sendResponse('Error', 'pesan anda sudah dibaca', null, 500);
+        return $this->sendResponse('Error', 'pesan telah dibaca', null, 500);
     } 
 }

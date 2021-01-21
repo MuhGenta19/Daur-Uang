@@ -21,10 +21,10 @@ class PenyetoranController extends Controller
         $harga = Jenis::find(request('jenis_sampah'));
         $data['penghasilan'] = $fee == 0 ? $harga->harga * $data['berat'] : $harga->harga * $data['berat'] - (($harga->harga * $data['berat']) * $fee / 100);
 
-        $data['id_nasabah'] = Auth::id();
+        $data['user_id'] = Auth::id();
 
-        // jika ada orang iseng 
-        abort_if($data['id_nasabah'] != Auth::id(), 403, 'ANDA TIDAK MEMILIKI AKSES KESINI');
+        // kalo ada orang iseng
+        abort_if($data['user_id'] != Auth::id(), 404, 'Telkomsel internet baik!');
 
         $res = Penyetoran::create($data);
 
@@ -42,46 +42,45 @@ class PenyetoranController extends Controller
     public function jemput(Client $client)
     {
         $data = request()->validate([
-            // 'avatar' => 'required',
-            'nama_pengirim'  => 'required',
-            'lokasi'       => 'required',
-            'telepon'  => 'required',
-            'keterangan'   => 'required',
+            'image'         => 'required',
+            'address'       => 'required',
+            'phone_number'  => 'required',
+            'description'   => 'required',
         ]);
 
         // Validasi image
-        // $image = base64_encode(file_get_contents(request('avatar')));
-        // $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
-        //     'form_params' => [
-        //         'key' => '6d207e02198a847aa98d0a2a901485a5',
-        //         'action' => 'upload',
-        //         'source' => $image,
-        //         'format' => 'json'
-        //     ]    
-        // ]);
-        // $get = $res->getBody()->getContents();
-        // $hasil = json_decode($get);
+        $image = base64_encode(file_get_contents(request('image')));
+        $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+            'form_params' => [
+                'key' => '6d207e02198a847aa98d0a2a901485a5',
+                'action' => 'upload',
+                'source' => $image,
+                'format' => 'json'
+            ]
+        ]);
+        $get = $res->getBody()->getContents();
+        $hasil = json_decode($get);
 
-        // // input image
-        // $data['avatar'] = $hasil->image->display_url;
+        // input image
+        $data['image'] = $hasil->image->display_url;
 
         // input user id
-        $data['id_nasabah'] = Auth::id();
+        $data['user_id'] = Auth::id();
 
-        // jika ada orang iseng
-        abort_if($data['id_nasabah'] != Auth::id(), 403, 'ANDA TIDAK MEMILIKI AKSES KESINI');
+        // kalo ada orang iseng
+        abort_if($data['user_id'] != Auth::id(), 404, 'Telkomsel internet positif!');
 
         $res = Penjemputan::create($data);
 
-        return $this->sendResponse('Success', 'Driver Sedang kelokasi Anda', $res, 200);
+        return $this->sendResponse('Success', 'driver Sedang dalam perjalanan', $res, 200);
     }
 
     public function historyPenjemputan()
     {
-        $data = Penjemputan::where('id_nasabah', Auth::id())->orderBy('status', 'ASC')->get();
+        $data = Penjemputan::where('user_id', Auth::id())->orderBy('status', 'ASC')->get();
 
         if (empty($data->array)) return $this->sendResponse();
 
-        return $this->sendResponse('Success', 'History Berhasil dimuat', $data, 200);
+        return $this->sendResponse('Success', 'berhasil memuat history', $data, 200);
     }
 }

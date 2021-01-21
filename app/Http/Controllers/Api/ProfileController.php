@@ -3,83 +3,73 @@
 namespace App\Http\Controllers\Api;
 
 use App\User;
-use App\Model\Tabungan;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-// use Alert;
 
 class ProfileController extends Controller
 {
-	public function show($id)
+    public function index()
     {
-        $data = User::findOrFail($id);
-
-        return $this->sendResponse('Success', 'Data user Berhasil Dimuat', $data, 200);
+        $user = User::where('id', Auth::user()->id)->first();
+        if (empty($user)) {
+            return response('login terlebih dahulu!');
+        }
+        return $this->sendResponse('Success', 'profil anda :', $user, 200);
     }
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'phone_number'  => 'required|string|min:8',
+            'name'          => 'required'
+        ]);
 
-	public function index()
-	{
-		$user = User::where('id', Auth::user()->id)->first();
-		$saldo = Tabungan::where('id_nasabah', Auth::id())->first('saldo');
-		if (Empty($user)) {
-			return response('login terlebih dahulu');
-		}
-		return $this->sendResponse('Success', 'ini dia profil anda', compact('user','saldo'), 200);
-	}
+        if ($request->avatar) {
+            $img = base64_encode(file_get_contents($request->avatar));
+            $client = new Client();
+            $res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
+                'form_params' => [
+                    'key' => '6d207e02198a847aa98d0a2a901485a5',
+                    'action' => 'upload',
+                    'source' => $img,
+                    'format' => 'json',
+                ]
+            ]);
+            $array = json_decode($res->getBody()->getContents());
+            $image = $array->image->file->resource->chain->image;
+        }
 
-	public function update(Request $request)
-	{
-		$this->validate($request, [
-			'password'  => 'confirmed',
-		]);
+        $user = User::where('id', Auth::user()->id)->first();
 
-		if ($request->image) {
-			$img = base64_encode(file_get_contents($request->image));
-			$client = new Client();
-			$res = $client->request('POST', 'https://freeimage.host/api/1/upload', [
-				'form_params' => [
-					'key' => '6d207e02198a847aa98d0a2a901485a5',
-					'action' => 'upload',
-					'source' => $img,
-					'format' => 'json',
-				]
-			]);
-			$array = json_decode($res->getBody()->getContents());
-			$image = $array->image->file->resource->chain->image;
-		}
+        $user->name = request('name') ?? $user->name;
+        $user->avatar = request('avatar') ? $image : $user->avatar;
 
-		$user = User::where('id', Auth::user()->id)->first();
-		$user->nama_lengkap = $request->nama_lengkap ?? $user->nama_lengkap;
-		$user->email = $request->email;
-		$user->telepon = $request->telepon;
-		$user->lokasi = $request->lokasi;
-		$user->avatar = $request->image ? $image : Auth::user()->avatar;
+        $user->phone_number = $request->phone_number;
+        // $user->address = $request->address;
 
-		if (!empty($request->password)) {
-			$user->password = Hash::make($request->password);
-		}
+        if (!empty($request->password)) {
+            $user->password = Hash::make($request->password);
+        }
 
-		$user->update();
-		return $this->sendResponse('Success', 'update profil berhasil', $user, 200);
-	}
-
-	public function change(Request $request)
-	{
-		$user = User::where('id', Auth::user()->id)->first();
-		if (!empty($user)) {
-			if (password_verify($request->password, $user->password)) {
-				$user->password = $request->password_change;
-				if (!empty($request->password_change)) {
-					$user->password = hash::make($request->password_change);
-				}
-				$user->update();
-				return $this->sendResponse('success', 'berhasil ganti password', $user, 200);
-			} else {
-				return $this->sendResponse('error', 'masukkan password lama', null, 404);
-			}
-		}
-	}
+        $user->update();
+        return $this->sendResponse('Success', 'berhasil mengupdate profil', $user, 200);
+    }
+    public function change(Request $request)
+    {
+        $user = User::where('id', Auth::user()->id)->first();
+        if (!empty($user)) {
+            if (password_verify($request->password, $user->password)) {
+                $user->password = $request->password_change;
+                if (!empty($request->password_change)) {
+                    $user->password = Hash::make($request->password_change);
+                }
+                $user->update();
+                return $this->sendResponse('Success', 'berhasil mengganti password', $user, 200);
+            } else {
+                return $this->sendResponse('Error', 'masukkan password lama', null, 400);
+            }
+        }
+    }
 }

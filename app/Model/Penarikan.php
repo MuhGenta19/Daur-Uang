@@ -11,7 +11,7 @@ class Penarikan extends Model
 {
     protected $table = 'penarikan';
 
-    protected $fillable = ['id_nasabah', 'keterangan', 'kredit', 'saldo', 'status'];
+    protected $fillable = ['user_id', 'nama', 'rekening', 'keterangan', 'kredit', 'saldo', 'status'];
 
     public function getCreatedAtAttribute()
     {

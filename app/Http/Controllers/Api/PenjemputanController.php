@@ -10,19 +10,19 @@ class PenjemputanController extends Controller
     public function index()
     {
         $permintaan = Penjemputan::with('user')->where('status', 0)->get();
-        return $this->sendResponse('Success', 'ini dia daftar permintaan jemput bos', $permintaan, 200);
+        return $this->sendResponse('Success', 'daftar permintaan jemput :', $permintaan, 200);
     }
 
     public function selesai()
     {
         $permintaan = Penjemputan::with('user')->where('status', 1)->get();
-        return $this->sendResponse('Success', 'ini dia daftar permintaan yang sudah dijemput bos', $permintaan, 200);
+        return $this->sendResponse('Success', 'daftar permintaan yang sudah dijemput :', $permintaan, 200);
     }
 
     public function penolakan()
     {
         $permintaan = Penjemputan::with('user')->where('status', 3)->get();
-        return $this->sendResponse('Success', 'ini dia daftar penolakan bos', $permintaan, 200);
+        return $this->sendResponse('Success', 'daftar penolakan jemput :', $permintaan, 200);
     }
 
     public function tolak(Penjemputan $penjemputan)
@@ -40,6 +40,6 @@ class PenjemputanController extends Controller
             'status'    => 1
         ]);
 
-        return $this->sendResponse('Success', 'Barang Berhasil dijemput', $penjemputan, 200);
+        return $this->sendResponse('Success', 'sampah berhasil dijemput', $penjemputan, 200);
     }
 }

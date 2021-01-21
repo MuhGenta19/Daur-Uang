@@ -15,14 +15,9 @@ class CreatePenjualansTable extends Migration
     {
         Schema::create('penjualans', function (Blueprint $table) {
             $table->id();
-            $table->date('tanggal');
-            $table->unsignedBigInteger('id_pengurus');
             $table->unsignedBigInteger('jenis_sampah');
-            $table->integer('harga_satuan');
             $table->integer('berat');
-            $table->integer('debit');
-            $table->string('client');
-            // $table->integer('penghasilan');
+            $table->integer('penghasilan');
             $table->timestamps();
         });
     }

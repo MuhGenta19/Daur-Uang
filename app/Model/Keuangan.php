@@ -9,5 +9,5 @@ class Keuangan extends Model
 {
     use FormatDate;
 
-    protected $fillable = ['id_penarikan', 'id_penjualan', 'saldo', 'debit', 'kredit', 'keterangan'];
+    protected $fillable = ['saldo', 'debit', 'kredit', 'keterangan'];
 }

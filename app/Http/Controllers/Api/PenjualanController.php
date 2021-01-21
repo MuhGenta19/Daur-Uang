@@ -16,7 +16,7 @@ class PenjualanController extends Controller
     {
         $data = Sampah::all();
 
-        return $this->sendResponse('Success', 'data berhasil diload', $data, 200);
+        return $this->sendResponse('Success', 'berhasil memuat data', $data, 200);
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class PenjualanController extends Controller
         $sampah = Sampah::where('jenis_sampah', $request->jenis_sampah)->firstOrFail();
 
         if ($sampah->berat < request('berat')) {
-            return $this->sendResponse('Error', 'sampah anda kurang', null, 400);
+            return $this->sendResponse('Error', 'sampah anda beratnya kurang', null, 400);
         }
 
         Penjualan::create([
@@ -59,9 +59,9 @@ class PenjualanController extends Controller
         try {
             $keuangan->save();
             $sampah->update();
-            return $this->sendResponse('Success', 'berhasil menjual sampah masyarakat', $keuangan, 200);
+            return $this->sendResponse('Success', 'berhasil menjual sampah', $keuangan, 200);
         } catch (\Throwable $th) {
-            return $this->sendResponse('Error', 'Gagal menjual sampah masyarakat', null, 500);
+            return $this->sendResponse('Error', 'Gagal menjual sampah', null, 500);
         }
     }
 }

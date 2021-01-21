@@ -15,14 +15,15 @@ class CreatePenjemputansTable extends Migration
     {
         Schema::create('penjemputans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_nasabah');
-            $table->unsignedBigInteger('id_pengurus')->nullable();
-            $table->string('nama_pengirim');
-            $table->string('telepon');
-            $table->string('lokasi');
-            // $table->string('keterangan');
+            $table->unsignedBigInteger('user_id');
+            $table->string('image');
+            $table->string('address');
+            $table->string('phone_number');
+            $table->string('description');
             $table->integer('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

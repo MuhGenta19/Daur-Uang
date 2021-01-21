@@ -9,11 +9,11 @@ class Penjualan extends Model
 {
     use FormatDate;
 
-    protected $fillable = ['tanggal', 'id_pengurus', 'jenis_sampah', 'berat', 'harga_satuan', 'debit', 'client'];
+    protected $fillable = ['jenis_sampah', 'berat', 'harga', 'penghasilan'];
 
     // relation
     public function jenis()
     {
-        return $this->belongsTo(JenisSampah::class, 'nama_kategori');
+        return $this->belongsTo(Jenis::class, 'jenis_sampah');
     }
 }

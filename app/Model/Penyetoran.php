@@ -10,7 +10,7 @@ class Penyetoran extends Model
 {
     use FormatDate;
 
-    protected $fillable = ['user_id', 'jenis_sampah', 'berat'];
+    protected $fillable = ['user_id', 'jenis_sampah', 'berat', 'penghasilan'];
 
     // Relasi
     public function user()
@@ -20,6 +20,6 @@ class Penyetoran extends Model
 
     public function jenis()
     {
-        return $this->belongsTo(JenisSampah::class, 'nama_kategori');
+        return $this->belongsTo(Jenis::class, 'jenis_sampah');
     }
 }

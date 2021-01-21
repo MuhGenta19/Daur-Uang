@@ -28,20 +28,20 @@ class Controller extends BaseController
     }
 
     // Sapa Login
-    public function hai()
+    public function sapa()
     {
         $jam = date('H:i');
 
         if ($jam >= '03:00' and $jam <= '10:00') {
-            $hai = 'Selamat Pagi ';
+            $sapa = 'Selamat Pagi ';
         } else if ($jam >= '10:01' and $jam <= '15:00') {
-            $hai = 'Selamat Siang ';
+            $sapa = 'Selamat Siang ';
         } else if ($jam >= '15:01' and $jam <= '18:00') {
-            $hai = 'Selamat Sore ';
+            $sapa = 'Selamat Sore ';
         } else {
-            $hai = 'Selamat Malam ';
+            $sapa = 'Selamat Malam ';
         }
 
-        return $hai;
+        return $sapa;
     }
 }

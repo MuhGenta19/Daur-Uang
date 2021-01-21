@@ -15,9 +15,8 @@ class ForgotPasswordController extends Controller
 
         Password::sendResetLink($credentials);
 
-        return response()->json(["msg" => 'Reset password link sent on your email id.']);
+        return response()->json(["msg" => 'link reset password akan dikirim ke email id anda.']);
     }
-    
     public function reset()
     {
         $credentials = request()->validate([
@@ -32,9 +31,9 @@ class ForgotPasswordController extends Controller
         });
 
         if ($reset_password_status == Password::INVALID_TOKEN) {
-            return response()->json(["msg" => "Invalid token provided"], 400);
+            return response()->json(["msg" => "pemberian token tidak valid"], 400);
         }
 
-        return response()->json(["msg" => "Password has been successfully changed"]);
+        return response()->json(["msg" => "berhasil mengganti password"]);
     }
 }

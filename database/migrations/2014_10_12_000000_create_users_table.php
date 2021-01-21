@@ -15,17 +15,18 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_lengkap');
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('telepon')->unique();
             $table->string('password');
-            $table->string('avatar')->nulllable()->default('https://via.placeholder.com/150');
-            $table->string('lokasi')->nulllable();
-            $table->unsignedBigInteger('role')->default(1);
+            $table->string('phone_number');
+            $table->string('avatar')->nullable()->default('https://via.placeholder.com/150');
+            $table->string('address')->nullable();
+            $table->unsignedBigInteger('role_id')->default(1);
             $table->rememberToken();
-            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

@@ -15,13 +15,14 @@ class CreateTabungansTable extends Migration
     {
         Schema::create('tabungans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_nasabah');
-            $table->unsignedBigInteger('jenis_sampah');
-            $table->integer('berat')->nullable();
             $table->integer('debit')->nullable();
             $table->integer('kredit')->nullable();
+            $table->string('keterangan');
             $table->integer('saldo')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

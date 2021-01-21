@@ -12,7 +12,7 @@ class TransaksiController extends Controller
 {
     public function index()
     {
-        $data = Tabungan::where('id_nasabah', Auth::id())->get();
+        $data = Tabungan::where('user_id', Auth::id())->get();
 
         if ($data == '[]') return $this->sendResponse();
 
@@ -26,7 +26,7 @@ class TransaksiController extends Controller
 
     public function show()
     {
-        $data = Tabungan::where('id_nasabah', Auth::id())->latest()->first();
+        $data = Tabungan::where('user_id', Auth::id())->latest()->first();
 
         if (!$data) return $this->sendResponse();
 
@@ -35,10 +35,10 @@ class TransaksiController extends Controller
 
     public static function addSaldo($data)
     {
-        $last = Tabungan::where('id_nasabah', Auth::id())->latest()->first();
+        $last = Tabungan::where('user_id', Auth::id())->latest()->first();
 
         Tabungan::create([
-            'id_nasabah'       => Auth::id(),
+            'user_id'       => Auth::id(),
             'keterangan'    => 'Penjualan Sampah ke Bank Sampah',
             'debit'         => $data['penghasilan'],
             'kredit'        => 0,
@@ -54,14 +54,14 @@ class TransaksiController extends Controller
             'nominal'   => 'required',
         ]);
 
-        $data = Tabungan::where('id_nasabah', Auth::id())->latest()->first();
+        $data = Tabungan::where('user_id', Auth::id())->latest()->first();
 
         if ($data == null or request('nominal') > ($data->saldo - 3000)) {
             return $this->sendResponse('Failed', 'Saldo Anda Tidak Cukup', 'null', 404);
         }
 
         Tabungan::create([
-            'id_nasabah'       => Auth::id(),
+            'user_id'       => Auth::id(),
             'keterangan'    => 'Penarikan Saldo',
             'debit'         => 0,
             'kredit'        => request('nominal'),
@@ -69,7 +69,7 @@ class TransaksiController extends Controller
         ]);
 
         $penarikan = Penarikan::create([
-            'id_nasabah'       => Auth::id(),
+            'user_id'       => Auth::id(),
             'nama'          => request('nama'),
             'rekening'      => request('rekening'),
             'kredit'        => request('nominal'),
@@ -82,8 +82,8 @@ class TransaksiController extends Controller
 
     public function riwayat()
     {
-        $datas = Penarikan::where('id_nasabah', Auth::id())->get();
+        $datas = Penarikan::where('user_id', Auth::id())->get();
 
-        return $this->sendResponse('Success', 'Riwayat berhasil ditampilkan', $datas, 200);
+        return $this->sendResponse('Success', 'riwayat berhasil ditampilkan', $datas, 200);
     }
 }

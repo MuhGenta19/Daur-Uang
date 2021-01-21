@@ -15,9 +15,6 @@ class CreateKeuangansTable extends Migration
     {
         Schema::create('keuangans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_penarikan');
-            $table->unsignedBigInteger('id_penjualan');
-            $table->date('tanggal');
             $table->string('keterangan');
             $table->integer('debit')->nullable();
             $table->integer('kredit')->nullable();

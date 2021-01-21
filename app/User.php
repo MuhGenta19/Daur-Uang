@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 {
     use Notifiable;
     use SoftDeletes;
@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'nama_lengkap', 'email', 'password', 'telepon', 'avatar', 'lokasi', 'role_id'
+        'name', 'email', 'password', 'phone_number', 'avatar', 'address', 'role_id'
     ];
 
     /**

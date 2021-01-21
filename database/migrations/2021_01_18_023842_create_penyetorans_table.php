@@ -15,13 +15,13 @@ class CreatePenyetoransTable extends Migration
     {
         Schema::create('penyetorans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_nasabah');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('jenis_sampah');
             $table->integer('berat');
             $table->integer('penghasilan');
             $table->timestamps();
 
-            $table->foreign('id_nasabah')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('jenis_sampah')->references('id')->on('jenis')->onDelete('cascade');
         });
     }
