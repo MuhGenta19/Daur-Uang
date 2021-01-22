@@ -40,7 +40,7 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        $hai = $this->sapa();
+        $sapa = $this->sapa();
 
         return view('auth.login', compact('sapa'));
     }
