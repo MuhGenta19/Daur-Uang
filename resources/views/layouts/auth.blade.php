@@ -26,7 +26,7 @@
 
     @yield('content');
 
-    {{-- @include('sweetalert::alert') --}}
+    @include('sweetalert::alert')
 
     <!-- Bootstrap core JavaScript-->
     <script src="{{asset('template/vendor/jquery/jquery.min.js')}}"></script>
