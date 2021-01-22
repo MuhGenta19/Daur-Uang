@@ -96,13 +96,11 @@
 
         <div class="content">
             <div class="title m-b-md">
-                API Bank-Sampa<a class="login" href="{{route('login')}}">h</a>
+                <a>DaurUang</a>
             </div>
 
             <div class="links">
-                <a href="https://laracasts.com">Rais</a>
-                <a href="https://github.com/icatpojan">Irsyad Fauzan</a>
-                <a href="https://github.com/hanifazzuhdi">Hanif Az Zuhdi</a>
+                <a class="login" href="{{route('login')}}">Get Started</a>
             </div>
         </div>
     </div>

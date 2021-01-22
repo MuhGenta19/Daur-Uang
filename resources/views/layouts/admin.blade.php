@@ -11,7 +11,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{$title ?? "Sammpah.com"}}</title>
+    <title>{{$title ?? "DaurUang"}}</title>
 
     <!-- Custom fonts for this web-->
     <link href="{{asset('template/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">

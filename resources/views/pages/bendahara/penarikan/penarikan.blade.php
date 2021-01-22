@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Penarikan Tunai - Sammpah.com'])
+@extends('layouts.admin', ['title' => 'Penarikan Tunai - DaurUang'])
 
 
 @section('content')
@@ -67,7 +67,7 @@
         <div class="card-header d-flex justify-content-between align-items-center bg-info">
             <div class="text-white">
                 <img src="{{asset('img/logo.png')}}" width="60px" alt="">
-                <h5 class="d-inline font-weight-bold">SAMMPAH</h5>
+                <h5 class="d-inline font-weight-bold">DaurUang</h5>
             </div>
 
             <div class="text-center pt-2 text-white">

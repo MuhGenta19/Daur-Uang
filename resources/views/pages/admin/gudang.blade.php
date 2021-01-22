@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Penyimpanan Sampah - Sammpah.com'])
+@extends('layouts.admin', ['title' => 'Penyimpanan Sampah - DaurUang'])
 
 @section('content')
 

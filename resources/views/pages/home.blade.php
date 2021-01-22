@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => "Dashboard Sammpah - Sammpah.com"])
+@extends('layouts.admin', ['title' => "Dashboard - DaurUang"])
 
 @section('content')
 

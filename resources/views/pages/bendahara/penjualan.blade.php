@@ -1,4 +1,4 @@
-@extends('layouts.admin', ['title' => 'Daftar Penjualan Sampah - Sammpah.com'])
+@extends('layouts.admin', ['title' => 'Daftar Penjualan Sampah - DaurUang'])
 
 @section('style')
 <link href="{{asset('template/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">

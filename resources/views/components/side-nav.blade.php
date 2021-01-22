@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-fire"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SAMMPAH</div>
+        <div class="sidebar-brand-text mx-3">DaurUang</div>
     </a>
 
     <hr class="sidebar-divider my-0">
