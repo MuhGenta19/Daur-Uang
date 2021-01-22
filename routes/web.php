@@ -15,7 +15,7 @@ Route::fallback(function () {
     return view('errors.404');
 });
 
-Route::group(['namespace' => 'Web', 'middleware' => ['UserWeb']], function () 
+Route::group(['namespace' => 'Web'], function () 
 {
 
     // Route Dashboard      -> Admin, Bendahara
