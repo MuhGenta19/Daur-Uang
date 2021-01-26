@@ -15,7 +15,7 @@
             </ol>
         </div>
 
-        <a class=" d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" onclick="window.print()"><i
+        <a class=" d-none d-sm-inline-block btn btn-sm btn-dark shadow-sm" onclick="window.print()"><i
                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
