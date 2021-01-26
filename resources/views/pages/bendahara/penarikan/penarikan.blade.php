@@ -41,7 +41,7 @@
 
                     <div class="form-group">
                         <label for="keterangan">Keterangan</label>
-                        <textarea class="form-control" name="keterangan" id="keterangab" cols="30" rows="4"></textarea>
+                        <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="4"></textarea>
                         <small class="text-danger">*Form keterangan boleh tidak diisi</small>
                     </div>
 
