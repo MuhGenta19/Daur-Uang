@@ -38,7 +38,7 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <button class="btn btn-primary btn-user btn-block">
+                                    <button class="btn btn-secondary btn-user btn-block">
                                         Login
                                     </button>
                                     <hr>
