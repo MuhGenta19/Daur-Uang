@@ -21,7 +21,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header d-flex justify-content-between py-3">
-            <h6 class="mt-2 font-weight-bold text-primary">DAFTAR JENIS SAMPAH</h6>
+            <h6 class="mt-2 font-weight-bold text-dark">DAFTAR JENIS SAMPAH</h6>
             <button class="btn btn-primary btn-sm btn-create-jenis" data-toggle="modal"
                 data-target="#modal-sampah-create">
                 <i class="fas fa-plus"></i>

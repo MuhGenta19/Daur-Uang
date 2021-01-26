@@ -20,7 +20,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header d-flex justify-content-between py-3">
-            <h6 class="mt-2 font-weight-bold text-primary">GUDANG PENYIMPANAN SAMPAH</h6>
+            <h6 class="mt-2 font-weight-bold text-dark">GUDANG PENYIMPANAN SAMPAH</h6>
         </div>
         <div class="card-body d-flex justify-content-around flex-wrap">
 

@@ -27,7 +27,7 @@
     <div class="card shadow mb-4">
         <a href="#informasi-nasabah" class="d-block card-header py-3" data-toggle="collapse" role="button"
             aria-expanded="true" aria-controls="informasi-nasabah">
-            <h6 class="m-0 font-weight-bold text-primary">INFORMASI NASABAH</h6>
+            <h6 class="m-0 font-weight-bold text-dark">INFORMASI NASABAH</h6>
         </a>
 
         <div class="collapse" id="informasi-nasabah">
@@ -55,7 +55,7 @@
     {{-- Table data --}}
     <div class="card shadow mb-4">
         <div class="card-header d-flex justify-content-between align-items-center py-3">
-            <h6 class="m-0 font-weight-bold text-primary">TABUNGAN NASABAH</h6>
+            <h6 class="m-0 font-weight-bold text-dark">TABUNGAN NASABAH</h6>
 
             <a class=" d-none d-sm-inline-block btn btn-sm btn-light shadow-sm"
                 onclick="printContent('data-tabungan')"><i class="fas fa-download fa-sm text-primary-50"></i> Print
