@@ -42,34 +42,26 @@ Route::post('password/reset', 'Api\ForgotPasswordController@reset');
 Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function () {
 
     // Route User -> Nasabah, Pengurus1, Pengurus2
-    Route::get('profile', 'ProfileController@index');//get profile 
-    Route::get('profile/{id}', 'ProfileController@index');//get user by id
-    Route::post('profile', 'ProfileController@update');//update profile & avatar
+    Route::get('profile', 'ProfileController@index'); 
+    Route::get('profile/{id}', 'ProfileController@index');
+    Route::post('profile/update', 'ProfileController@update');
     /**
      * phone_number
      * name
      * avatar
      */
 
-    Route::post('ganti', 'ProfileController@change');//change password
+    Route::post('password/change', 'ProfileController@change');
     /**
      * password
      * password_change
      */
 
     // Route penyetoran -> Nasabah
-    Route::get('historyPenjemputan', 'PenyetoranController@historyPenjemputan');//history penjemputan sampah
+    Route::get('penjemputan/history', 'PenyetoranController@historyPenjemputan');
     Route::post('setorDriver/{fee}', 'PenyetoranController@store');//nasabah setor sampah dijemput driver
-    /**
-     * coba tanya rais...
-     */
-
     Route::post('setor', 'PenyetoranController@store');//nasabah antar sampah sendiri ke gudang
-    /**
-     * coba tanya rais...
-     */
-
-    Route::post('jemput', 'PenyetoranController@jemput');//permintaan jemput sampah oleh driver
+    Route::post('jemput', 'PenyetoranController@jemput');
     /**
      * image
      * address
@@ -78,10 +70,10 @@ Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function () {
      */
 
     // Route Transaksi -> Nasabah
-    Route::get('getTabungan', 'TransaksiController@index');//melihat buku tabungan nasabah
-    Route::get('getSaldo', 'TransaksiController@show');//cek saldo nasabah
-    Route::get('riwayat/tarik', 'TransaksiController@riwayat');//riwayat penarikan saldo
-    Route::post('tarikSaldo', 'TransaksiController@tarik');//tarik saldo oleh nasabah
+    Route::get('tabungan', 'TransaksiController@index');
+    Route::get('ceksaldo', 'TransaksiController@show');
+    Route::get('penarikan/riwayat', 'TransaksiController@riwayat');
+    Route::post('tarikSaldo', 'TransaksiController@tarik');
     /**
      * nama
      * rekening (no)
@@ -89,12 +81,12 @@ Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function () {
      */
 
     // Route Gudang sampah -> Nasabah, Pengurus1, Pengurus2
-    Route::get('getSampah', 'SampahController@index');//melihat sampah yang ada di gudang
-    Route::get('getSampah/{id}', 'SampahController@show');//melihat sampah berdasarkan id jenisnya
-    Route::get('getJenis', 'SampahController@getJenis');//melihat jenis sampah
+    Route::get('sampah', 'SampahController@index');
+    Route::get('sampah/{id}', 'SampahController@show');
+    Route::get('jenis', 'SampahController@getJenis');
 
     // Route Penjualan -> Pengurus 2
-    Route::get('gudang', 'PenjualanController@index');//untuk melihat kapasitas sampah di gudang
+    Route::get('gudang', 'PenjualanController@index');
     Route::post('sell', 'PenjualanController@store');//menginput hasil penjualan
     /**
      * jenis_sampah
@@ -103,20 +95,20 @@ Route::group(['namespace' => 'Api', 'middleware' => 'jwt.verify'], function () {
      */
 
     //Route penjemputan -> Pengurus 1
-    Route::get('penjemputan/daftar', 'PenjemputanController@index');//melihat permintaan penjemputan
-    Route::get('penjemputan/selesai', 'PenjemputanController@selesai');//melihat yang sudah dijemput
-    Route::get('penjemputan/penolakan', 'PenjemputanController@penolakan');//melihat yang tidak mau dijemput
-    Route::post('penjemputan/penolakan/{penjemputan}', 'PenjemputanController@tolak');//menolak permintaan penjemputan (tandai dibatalkan)
-    Route::post('penjemputan/konfirmasi/{penjemputan}', 'PenjemputanController@konfirmasiPenjemputan');//konfirmasi penjemputan (tandai selesai)
+    Route::get('jemput/permintaan', 'PenjemputanController@index');
+    Route::get('jemput/selesai', 'PenjemputanController@selesai');
+    Route::get('jemput/penolakan', 'PenjemputanController@penolakan');
+    Route::post('jemput/tolak/{penjemputan}', 'PenjemputanController@tolak');
+    Route::post('jemput/konfirmasi/{penjemputan}', 'PenjemputanController@konfirmasiPenjemputan');
 
     //Route chat -> Nasabah dan Pengurus 1
-    Route::get('allmessage', 'ChatController@index');//ambil semua pesan
-    Route::get('chat/{id}', 'ChatController@getChat');//buat nge get pesan
-    Route::post('chat/{id}', 'ChatController@sendChat');//buat ngirim pesan
+    Route::get('messages', 'ChatController@index');
+    Route::get('chat/{id}', 'ChatController@getChat');
+    Route::post('chat/{id}', 'ChatController@sendChat');
     /**
      * message
      */
-    Route::delete('chat/{id} ', 'ChatController@destroy');//hapus pesan
+    Route::delete('chat/{id} ', 'ChatController@destroy');
 
 });
     
